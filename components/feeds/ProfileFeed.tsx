@@ -39,21 +39,19 @@ export default function MainFeed() {
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      // Create a query to fetch posts ordered by createdAt in descending order, excluding posts by the current user
+      // Fetch posts
       const postsRef = collection(FIREBASE_DB, "root/data/posts");
-      let postsQuery = query(postsRef, orderBy("createdAt", "desc"));
-
-      const querySnapshot = await getDocs(postsQuery);
+      const q = query(
+        postsRef,
+        where("userId", "==", FIREBASE_AUTH.currentUser?.uid),
+        orderBy("createdAt", "desc")
+      );
+      const querySnapshot = await getDocs(q);
       const postsData: Post[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Post[];
-
-      const filteredPostsData = postsData.filter(
-        (post) => post.userId == currentUserId
-      );
-
-      setPosts((prevPosts) => [...prevPosts, ...filteredPostsData]);
+      setPosts(postsData);
     } catch (error) {
       console.error("Error fetching posts: ", error);
     } finally {
@@ -93,7 +91,6 @@ export default function MainFeed() {
             {new Date(item.createdAt.seconds * 1000).toLocaleDateString()}
           </Text>
         </View>
-        <LikeButton postId={item.id} />
       </View>
     </View>
   );
@@ -107,7 +104,7 @@ export default function MainFeed() {
           style={{ padding: 10 }}
           data={posts}
           renderItem={renderPost}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => "profile" + item.id}
           onEndReachedThreshold={0.5}
         />
       )}

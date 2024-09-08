@@ -10,10 +10,6 @@ export default function SettingsScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
       <Button title="Sign Out" onPress={() => FIREBASE_AUTH.signOut()} />
-      <Button
-        title="Delete Account"
-        onPress={() => FIREBASE_AUTH.currentUser?.delete()}
-      />
     </View>
   );
 }

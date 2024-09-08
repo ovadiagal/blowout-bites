@@ -3,11 +3,12 @@ import { StyleSheet } from "react-native";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import MainFeed from "@/components/feeds/MainFeed";
+import RecipeBook from "@/components/feeds/RecipeBook";
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <MainFeed />
+      <RecipeBook />
     </View>
   );
 }

@@ -12,8 +12,13 @@ import {
 } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "@/FirebaseConfig";
 
-const LikeButton: React.FC<{ postId: string }> = ({ postId }) => {
-  const [isClicked, setIsClicked] = useState(false);
+const LikeButton: React.FC<{ postId: string; liked: boolean }> = ({
+  postId,
+  liked,
+}) => {
+const [isClicked, setIsClicked] = useState(() => liked);
+  console.log("postId", postId);
+  console.log("liked", liked);
   return (
     <Pressable
       onPress={() => {

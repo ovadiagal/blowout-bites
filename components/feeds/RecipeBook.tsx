@@ -59,27 +59,25 @@ export default function MainFeed() {
         })) as Like[];
 
         const postsRef = collection(FIREBASE_DB, "root/data/posts");
-
+        console.log("alllikes", allLikes);
         if (allLikes.length === 0) {
           setPosts([]);
           return;
         }
-        const postQuery = query(
-          postsRef,
-          where(
-            "id",
-            "in",
-            allLikes.map((like) => like.postId)
-          ),
-          orderBy("createdAt", "desc")
-        );
+
+        const likeArray = allLikes.map((like) => like.postId);
+        console.log("likeArray", likeArray);
+        const postQuery = query(postsRef, where("__name__", "in", likeArray));
+
         const postQuerySnapshot = await getDocs(postQuery);
+        console.log(postQuerySnapshot.docs);
         const postsData: Post[] = postQuerySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         })) as Post[];
 
-        setPosts((prevPosts) => [...prevPosts, ...postsData]);
+        console.log(postsData);
+        setPosts(postsData);
       } catch (error) {
         console.error("Error fetching posts: ", error);
       } finally {

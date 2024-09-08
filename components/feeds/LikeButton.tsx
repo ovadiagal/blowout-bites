@@ -16,9 +16,7 @@ const LikeButton: React.FC<{ postId: string; liked: boolean }> = ({
   postId,
   liked,
 }) => {
-const [isClicked, setIsClicked] = useState(() => liked);
-  console.log("postId", postId);
-  console.log("liked", liked);
+  const [isClicked, setIsClicked] = useState(() => liked);
   return (
     <Pressable
       onPress={() => {

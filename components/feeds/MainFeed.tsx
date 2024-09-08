@@ -73,9 +73,9 @@ export default function MainFeed() {
         ...doc.data(),
       })) as Like[];
       // Get the postIds from allLike
-      const postIds = new Set(allLikes.map((like) => like.postId));
-      setLikes(postIds);
-      console.log("postIdsin main,", postIds);
+      const likeIds = new Set(allLikes.map((like) => like.postId));
+      setLikes(likeIds);
+      console.log("postIdsin main,", likeIds);
     } catch (error) {
       console.error("Error fetching posts: ", error);
     } finally {

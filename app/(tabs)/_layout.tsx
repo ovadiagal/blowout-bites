@@ -44,6 +44,9 @@ export default function TabLayout() {
         options={{
           title: "Blowout Bites",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerStyle: {
+            backgroundColor: "red", // Set the background color to red
+          },
           headerRight: () => (
             <Link href="../pages/modal" asChild>
               <Pressable>
@@ -66,6 +69,9 @@ export default function TabLayout() {
         options={{
           title: "Recipe Book",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerStyle: {
+            backgroundColor: "red", // Set the background color to red
+          },
         }}
       />
 
@@ -88,6 +94,10 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
+
+          headerStyle: {
+            backgroundColor: "red", // Set the background color to red
+          },
         }}
       />
     </Tabs>

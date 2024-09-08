@@ -6,50 +6,42 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
 import {
   collection,
   query,
   orderBy,
   getDocs,
-  startAfter,
   limit,
-  DocumentSnapshot,
+  where,
 } from "firebase/firestore";
-import { FIREBASE_DB } from "@/FirebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "@/FirebaseConfig";
+import LikeButton from "./LikeButton";
+
+// Assuming you have a way to get the current user's ID
+const currentUserId = FIREBASE_AUTH.currentUser?.uid;
 
 interface Post {
   id: string;
   userId: string;
+  userScreenName: string;
   postId: string;
   imageUrl: string;
   caption: string;
   createdAt: { seconds: number; nanoseconds: number };
 }
 
-const PAGE_SIZE = 10; // Number of posts per page
-
 export default function MainFeed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
-  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      // Create a query to fetch posts ordered by createdAt in descending order
+      // Create a query to fetch posts ordered by createdAt in descending order, excluding posts by the current user
       const postsRef = collection(FIREBASE_DB, "root/data/posts");
-      let postsQuery = query(
-        postsRef,
-        orderBy("createdAt", "desc"),
-        limit(PAGE_SIZE)
-      );
-
-      if (lastVisible) {
-        postsQuery = query(postsQuery, startAfter(lastVisible));
-      }
+      let postsQuery = query(postsRef, orderBy("createdAt", "desc"));
 
       const querySnapshot = await getDocs(postsQuery);
       const postsData: Post[] = querySnapshot.docs.map((doc) => ({
@@ -57,98 +49,108 @@ export default function MainFeed() {
         ...doc.data(),
       })) as Post[];
 
-      if (querySnapshot.docs.length > 0) {
-        setPosts((prevPosts) => [...prevPosts, ...postsData]);
-        setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setHasMore(querySnapshot.docs.length === PAGE_SIZE);
-      } else {
-        setHasMore(false);
-      }
+      const filteredPostsData = postsData.filter(
+        (post) => post.userId == currentUserId
+      );
+
+      setPosts((prevPosts) => [...prevPosts, ...filteredPostsData]);
     } catch (error) {
       console.error("Error fetching posts: ", error);
     } finally {
       setLoading(false);
-      setLoadingMore(false);
     }
-  }, [lastVisible]);
+  }, []);
 
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
 
-  const loadMorePosts = () => {
-    if (hasMore && !loadingMore) {
-      setLoadingMore(true);
-      fetchPosts();
-    }
-  };
-
   const renderPost = ({ item }: { item: Post }) => (
     <View style={styles.postContainer}>
       <Image
         source={{ uri: item.imageUrl }}
-        style={styles.image}
-        resizeMode="contain"
+        style={{
+          width: "100%",
+          aspectRatio: 1,
+          borderRadius: 10,
+          marginBottom: 10,
+        }}
       />
-      <Text style={styles.caption}>{item.caption}</Text>
-      <Text style={styles.date}>
-        {new Date(item.createdAt.seconds * 1000).toLocaleDateString()}
-      </Text>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View>
+          <Text style={styles.username}>@{item.userScreenName}</Text>
+          {item.caption ? (
+            <Text style={styles.caption}>{item.caption}</Text>
+          ) : null}
+          <Text style={styles.date}>
+            {new Date(item.createdAt.seconds * 1000).toLocaleDateString()}
+          </Text>
+        </View>
+        <LikeButton postId={item.id} />
+      </View>
     </View>
   );
-
-  const renderFooter = () => {
-    if (loadingMore) {
-      return <ActivityIndicator size="large" color="#0000ff" />;
-    }
-    return null;
-  };
 
   return (
     <View style={styles.container}>
       {loading && !posts.length ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="white" />
       ) : (
         <FlatList
+          style={{ padding: 10 }}
           data={posts}
           renderItem={renderPost}
           keyExtractor={(item) => item.id}
-          onEndReached={loadMorePosts}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={renderFooter}
         />
       )}
+      <Text></Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
-    padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     width: "100%",
   },
   postContainer: {
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
-    height: 300,
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingBottom: 10,
+    borderWidth: 0,
+    padding: 10,
+    paddingTop: 0,
+    borderColor: "white",
   },
   image: {
     height: "100%",
     borderRadius: 10,
   },
   caption: {
-    marginTop: 10,
+    marginTop: 4,
     fontSize: 16,
-    color: "#333",
+    color: "white",
   },
   date: {
     marginTop: 5,
     fontSize: 12,
-    color: "#888",
+    color: "white",
+  },
+  username: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
   },
 });

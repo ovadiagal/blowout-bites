@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
   postContainer: {
     width: "100%",
     height: 300,
-    marginBottom: 20,
+    // marginBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
-    paddingBottom: 10,
+    // paddingBottom: 10,
   },
   image: {
     height: "100%",

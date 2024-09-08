@@ -41,7 +41,6 @@ export default function MainFeed() {
     try {
       // Create a query to fetch posts ordered by createdAt in descending order, excluding posts by the current user
       const postsRef = collection(FIREBASE_DB, "root/data/posts");
-      console.log("currentUserId", currentUserId);
       let postsQuery = query(postsRef, orderBy("createdAt", "desc"));
 
       const querySnapshot = await getDocs(postsQuery);
@@ -49,6 +48,7 @@ export default function MainFeed() {
         id: doc.id,
         ...doc.data(),
       })) as Post[];
+
 
       setPosts((prevPosts) => [...prevPosts, ...postsData]);
     } catch (error) {
@@ -108,16 +108,19 @@ export default function MainFeed() {
           onEndReachedThreshold={0.5}
         />
       )}
+      <Text></Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
     width: "100%",
-    marginBottom: 10,
   },
   postContainer: {
     display: "flex",

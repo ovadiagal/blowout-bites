@@ -34,18 +34,16 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Blowout Bites",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerStyle: {
-            backgroundColor: "red", // Set the background color to red
+            backgroundColor: "red",
           },
           headerRight: () => (
             <Link href="../pages/modal" asChild>
@@ -68,7 +66,7 @@ export default function TabLayout() {
         name="recipebook"
         options={{
           title: "Recipe Book",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
           headerStyle: {
             backgroundColor: "red", // Set the background color to red
           },
@@ -79,7 +77,7 @@ export default function TabLayout() {
         name="two"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           headerRight: () => (
             <Link href="../pages/settings" asChild>
               <Pressable>

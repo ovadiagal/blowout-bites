@@ -9,8 +9,10 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <View
         style={{
-          flexDirection: "row",
           display: "flex",
+          flexDirection: "column",
+          alignContent: "flex-start",
+          padding: 20,
         }}
       >
         <Text style={styles.title}>
@@ -26,18 +28,12 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
   },
   title: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: "bold",
-    alignSelf: "flex-start",
-    backgroundColor: "black",
-    flexGrow: 1,
   },
   separator: {
     marginVertical: 30,

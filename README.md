@@ -1,4 +1,4 @@
-# 🥦 Blowout Bites
+# Blowout Bites 🥦 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/f0cc019e-1ef3-4d6e-9151-6f5ea25780ec" width="130">
 </p>

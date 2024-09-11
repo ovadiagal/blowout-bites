@@ -19,8 +19,6 @@ import {
 import { FIREBASE_AUTH, FIREBASE_DB } from "@/FirebaseConfig";
 import LikeButton from "./LikeButton";
 
-// Assuming you have a way to get the current user's ID
-
 interface Like {
   id: string;
   userId: string;

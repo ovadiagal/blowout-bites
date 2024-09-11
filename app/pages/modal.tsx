@@ -50,19 +50,10 @@ export default function ModalScreen() {
       setUploading(true);
       const response = await fetch(image);
       const blob = await response.blob();
-
       const id = uuidv4();
-
-      // Create a reference in Firebase Storage
       const storageRef = ref(FIREBASE_STORAGE, `images/${id}.jpg`);
-
-      // Upload the image
       await uploadBytes(storageRef, blob);
-
-      // Get the download URL
       const downloadURL = await getDownloadURL(storageRef);
-
-      // Upload userId and downloadURL to Firestore
       await addDoc(collection(FIREBASE_DB, "root/data/posts"), {
         userId: userId,
         userScreenName:

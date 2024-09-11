@@ -28,7 +28,6 @@ const LikeButton: React.FC<{ postId: string; liked: boolean }> = ({
           deleteDoc(doc(FIREBASE_DB, "root/data/likes", docId));
         } else {
           setIsClicked(true);
-          // Specify the document ID and create the document with setDoc
           setDoc(doc(FIREBASE_DB, "root/data/likes", docId), {
             userId: FIREBASE_AUTH.currentUser?.uid,
             postId: postId,
@@ -48,8 +47,6 @@ const LikeButton: React.FC<{ postId: string; liked: boolean }> = ({
     </Pressable>
   );
 };
-
-// Define styles for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,

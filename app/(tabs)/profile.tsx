@@ -13,10 +13,22 @@ export default function TabTwoScreen() {
           flexDirection: "column",
           alignContent: "flex-start",
           padding: 20,
+          backgroundColor: "#121212",
         }}
       >
         <Text style={styles.title}>
           @{FIREBASE_AUTH.currentUser?.displayName}
+        </Text>
+        <Text style={{ color: "white" }}>
+          Joined on:{" "}
+          {FIREBASE_AUTH.currentUser?.metadata.creationTime &&
+            new Date(
+              FIREBASE_AUTH.currentUser.metadata.creationTime
+            ).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "2-digit",
+            })}
         </Text>
       </View>
 
@@ -34,6 +46,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "white",
   },
   separator: {
     marginVertical: 30,

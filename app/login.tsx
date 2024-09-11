@@ -91,6 +91,7 @@ const Page = () => {
         <TextInput
           autoCapitalize="none"
           placeholder="Email"
+          placeholderTextColor="grey"
           style={styles.inputField}
           value={email}
           onChangeText={setEmail}
@@ -98,6 +99,7 @@ const Page = () => {
         <TextInput
           autoCapitalize="none"
           placeholder="Password"
+          placeholderTextColor="grey"
           style={styles.inputField}
           value={password}
           onChangeText={setPassword}

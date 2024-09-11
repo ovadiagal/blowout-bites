@@ -127,6 +127,7 @@ export default function ModalScreen() {
         <TextInput
           style={styles.input}
           placeholder="Give your blowout a name..."
+          placeholderTextColor={"white"}
           value={text}
           onChangeText={setText}
         />

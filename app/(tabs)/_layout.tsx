@@ -52,7 +52,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="plus"
                     size={25}
-                    color={Colors[colorScheme ?? "light"].text}
+                    color={"white"}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -85,7 +85,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="gear"
                     size={25}
-                    color={Colors[colorScheme ?? "light"].text}
+                    color="white"
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

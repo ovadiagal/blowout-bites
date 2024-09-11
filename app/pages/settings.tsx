@@ -21,9 +21,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 30,
     gap: 10,
+    backgroundColor: "#121212",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
   },
 });

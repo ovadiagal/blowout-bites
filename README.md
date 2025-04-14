@@ -1,5 +1,5 @@
 # Blowout Bites 🥦 
-<img align="left" src="https://github.com/user-attachments/assets/f0cc019e-1ef3-4d6e-9151-6f5ea25780ec" width="90">
+<img align="right" src="https://github.com/user-attachments/assets/f0cc019e-1ef3-4d6e-9151-6f5ea25780ec" width="90">
 This is my submission for Programming Assignment #1 for CS4261 (Mobile Apps & Services) at Georgia Tech.
 
 Blowout Bites is a food sharing social media app through which users can upload photos of their delicious meals (AKA their blowout bites).
